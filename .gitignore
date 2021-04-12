@@ -1,9 +1,18 @@
-.vagrant
-/cookbooks
+# Ignore Vagrant files
+**/.vagrant
 
-# Bundler
-bin/*
-.bundle/*
+# Ignore Bundle files
+**/.bundle/*
 
-.kitchen/
-.kitchen.local.yml
+# Ignore Kitchen files
+**/.kitchen/
+**/.kitchen.local.yml
+
+# Ignore Chef Infra directories
+**/.chef
+
+# Ignore git directories
+**/.git
+
+# Ignore all Berksfile.lock
+**/Berksfile.lock

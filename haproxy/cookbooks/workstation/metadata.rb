@@ -1,0 +1,6 @@
+name             'workstation'
+maintainer       'Nobody'
+maintainer_email 'nobody@example.com'
+license          'all rights reserved'
+description      'Installs/Configures workstation'
+version          '0.2.1'
