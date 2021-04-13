@@ -45,10 +45,14 @@ berks install && berks update && berks upload
 
 
 # Bootstrapping nodes
+
+_NOTE: Use either **With runlists** or **With roles**._
+
 Use `vagrant-ssh` to get SSH credentials.
 
 Bootstrap each node using the respective ports and identity-files. Example:
 
+## With runlists
 ```
 knife bootstrap localhost -p 2222 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N web1 \
@@ -61,6 +65,26 @@ knife bootstrap localhost -p 2200 -U vagrant --sudo \
 knife bootstrap localhost -p 2201 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N load-balancer \
 --run-list --run-list "recipe[wrapper-haproxy]"
+```
+
+Go to http://localhost:9000 and the HAProxy should be listening, proxying to _web1_ and _web2_ servers.
+
+## With roles
+```
+# Upload all roles
+knife role from file roles/*.rb
+
+knife bootstrap localhost -p 2222 -U vagrant --sudo \
+-i {IDENTITY_FILE} -N web1 \
+--run-list --run-list "role[web]"
+
+knife bootstrap localhost -p 2200 -U vagrant --sudo \
+-i {IDENTITY_FILE} -N web2 \
+--run-list --run-list "role[web]"
+
+knife bootstrap localhost -p 2201 -U vagrant --sudo \
+-i {IDENTITY_FILE} -N load-balancer \
+--run-list --run-list "role[load-balancer]"
 ```
 
 Go to http://localhost:9000 and the HAProxy should be listening, proxying to _web1_ and _web2_ servers.
