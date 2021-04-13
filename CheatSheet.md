@@ -27,15 +27,26 @@ knife node run_list add ${NODE_NAME} "recipe[${COOKBOOK_NAME1}],recipe[${COOKBOO
 knife node run_list set ${NODE_NAME} "recipe[${COOKBOOK_NAME1}],recipe[${COOKBOOK_NAME2}]"
 ```
 
-# Converge
-
-## Locally
+# Converge Nodes
+## Manual list
 ```
-sudo chef-client
+knife ssh ${IP_ADDRESS} 'sudo chef-client' \
+--manual-list -p ${PORT} -x ${USER} -i ${IDENTITY_FILE}
 ```
-## With Knife SSH
+## All nodes (search pattern)
 ```
-TBD
+knife ssh "*:*" 'sudo chef-client' \
+-x ${USER} -i ${IDENTITY_FILE}
+```
+## By role (search pattern)
+```
+knife ssh "role:web" 'sudo chef-client' \
+-x ${USER} -i ${IDENTITY_FILE}
+```
+# Berks
+## Install, update and upload cookbooks/dependencies 
+```
+berks install && berks update && berks upload
 ```
 
 # Purge all cookbooks from Chef Server
