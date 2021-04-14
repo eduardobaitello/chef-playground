@@ -53,3 +53,11 @@ berks install && berks update && berks upload
 ```
 knife cookbook bulk delete '.*' -p
 ```
+
+# Search
+_**INDEX** can be 'client', 'environment', 'node', 'role', (or the name of a data bag)_  
+_**SEARCH_QUERY** is the format "attribute:value"_  
+_Querying `*:*` returns everything._
+```
+knife search INDEX SEARCH_QUERY
+```
