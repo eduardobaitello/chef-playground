@@ -11,7 +11,7 @@ haproxy_frontend 'http-in' do
   default_backend 'servers'
 end
 
-# Using hardcoded IPs
+# Denine servers using hardcoded IPs
 # haproxy_backend 'servers' do
 #   server [
 #     'web1 192.168.10.43:80 maxconn 32',
@@ -21,8 +21,14 @@ end
 #   # notifies :reload, 'haproxy_service[haproxy]', :immediately
 # end
 
-# Using search for dynamic nodes
+# Define servers using search (with roles)
 all_web_nodes = search('node', 'role:web')
+
+# Define servers using search (roles + environment production)
+# all_web_nodes = search('node', 'role:web AND chef_environment:production')
+
+# Define servers using search (roles + own environment)
+# all_web_nodes = search('node',"role:web AND chef_environment:#{node.chef_environment}")
 
 servers = []
 

@@ -1,6 +1,6 @@
 # haproxy
 
-Installs HAProxy and 2 Apache servers.
+Installs 1 HAProxy and 2 Apache servers.
 
 # Vagrant Environment
 
@@ -46,14 +46,21 @@ berks install && berks update && berks upload
 
 # Bootstrapping nodes
 
-_NOTE: Use either **With runlists** or **With roles**._
-
 Use `vagrant-ssh` to get SSH credentials.
 
-Bootstrap each node using the respective ports and identity-files. Example:
+Bootstrap each node using the respective ports and identity-files.
 
-## With runlists
+_NOTE: Use either **With recipes** or **With roles**._
+
+After boostrapping, go to http://localhost:9000 and the HAProxy should be listening, proxying to _web1_ and _web2_ servers.
+
+Note that the environment values are **_default** at this time.
+
+## With recipes runlists
 ```
+# Upload all roles and environments
+knife role from file roles/*.rb && knife environment from file environments/*.rb
+
 knife bootstrap localhost -p 2222 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N web1 \
 --run-list --run-list "recipe[workstation],recipe[apache],recipe[wrapper-chef-client]"
@@ -67,12 +74,10 @@ knife bootstrap localhost -p 2201 -U vagrant --sudo \
 --run-list --run-list "recipe[wrapper-haproxy]"
 ```
 
-Go to http://localhost:9000 and the HAProxy should be listening, proxying to _web1_ and _web2_ servers.
-
-## With roles
+## With roles runlists
 ```
-# Upload all roles
-knife role from file roles/*.rb
+# Upload all roles and environments
+knife role from file roles/*.rb && knife environment from file environments/*.rb
 
 knife bootstrap localhost -p 2222 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N web1 \
@@ -87,4 +92,12 @@ knife bootstrap localhost -p 2201 -U vagrant --sudo \
 --run-list --run-list "role[load-balancer]"
 ```
 
-Go to http://localhost:9000 and the HAProxy should be listening, proxying to _web1_ and _web2_ servers.
+# Defining environments
+Use the following commands to set the respective environment for each node:
+```
+knife node environment set web1 development
+knife node environment set web2 production
+knife node environment set load-balancer production
+```
+The web nodes should auto-converge within 5m~10m due to `wrapper-chef-client` configuration.  
+Wait for this time (or converge manually) and the environments values should reflect on the web pages.

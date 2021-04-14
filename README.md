@@ -2,4 +2,4 @@
 Playgrounds for Chef study.
 
 # haproxy
-Installs HAProxy and 2 Apache servers.
+Installs 1 HAProxy and 2 Apache servers.
