@@ -63,15 +63,15 @@ knife role from file roles/*.rb && knife environment from file environments/*.rb
 
 knife bootstrap localhost -p 2222 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N web1 \
---run-list --run-list "recipe[workstation],recipe[apache],recipe[wrapper-chef-client]"
+--run-list "recipe[workstation],recipe[apache],recipe[wrapper-chef-client]"
 
 knife bootstrap localhost -p 2200 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N web2 \
---run-list --run-list "recipe[workstation],recipe[apache],recipe[wrapper-chef-client]"
+-run-list "recipe[workstation],recipe[apache],recipe[wrapper-chef-client]"
 
 knife bootstrap localhost -p 2201 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N load-balancer \
---run-list --run-list "recipe[wrapper-haproxy]"
+--run-list "recipe[wrapper-haproxy]"
 ```
 
 ## With roles runlists
@@ -81,15 +81,15 @@ knife role from file roles/*.rb && knife environment from file environments/*.rb
 
 knife bootstrap localhost -p 2222 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N web1 \
---run-list --run-list "role[web]"
+--run-list "role[web]"
 
 knife bootstrap localhost -p 2200 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N web2 \
---run-list --run-list "role[web]"
+--run-list "role[web]"
 
 knife bootstrap localhost -p 2201 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N load-balancer \
---run-list --run-list "role[load-balancer]"
+-run-list "role[load-balancer]"
 ```
 
 # Defining environments

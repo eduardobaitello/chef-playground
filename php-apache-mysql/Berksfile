@@ -1,0 +1,8 @@
+# Berksfile wrapper for all Cookbooks
+# Reference: https://stackoverflow.com/a/30411110/7641078
+
+source 'https://supermarket.chef.io'
+
+%w(wrapper-apache2 wrapper-php).each do | cookbook_name |
+  cookbook cookbook_name, path: 'cookbooks/' + cookbook_name
+end
