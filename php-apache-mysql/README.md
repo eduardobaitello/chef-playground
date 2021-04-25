@@ -34,7 +34,7 @@ knife role from file roles/*.rb
 
 # Create data bag
 knife data bag create mysql
-knife data bag from file mysql data_bags/mysql/mysql.json
+knife data bag from file mysql data_bags/mysql/ -a
 
 knife bootstrap localhost -p 2222 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N php_apache \
