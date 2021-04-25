@@ -5,10 +5,19 @@ unless Vagrant.has_plugin?("vagrant-ohai")
   raise "vagrant-ohai plugin is not installed! Install with 'vagrant plugin install vagrant-ohai'"
 end
 
-NODE_SCRIPT = <<EOF.freeze
+NODE_SCRIPT_UBUNTU = <<EOF.freeze
   echo "Preparing node..."
   # Install chef client
   wget -O - https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 16.12
+EOF
+
+NODE_SCRIPT_CENTOS = <<EOF.freeze
+  echo "Preparing node..."
+  # ensure the time is up to date
+  yum -y install ntp
+  systemctl start ntpd
+  systemctl enable ntpd
+  curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 16.12
 EOF
 
 def set_hostname(server)
@@ -23,7 +32,7 @@ config.vm.define 'phpapache' do |phpapache|
     phpapache.vm.box_version = '20210401.01'
     phpapache.vm.hostname = 'phpapache'
     phpapache.vm.network "forwarded_port", guest: 80, host: 8080
-    phpapache.vm.provision :shell, inline: NODE_SCRIPT.dup
+    phpapache.vm.provision :shell, inline: NODE_SCRIPT_UBUNTU.dup
     phpapache.vm.provider :virtualbox do |vb|
       vb.gui = false
     end
@@ -31,12 +40,12 @@ config.vm.define 'phpapache' do |phpapache|
 end
 
 config.vm.define 'mysql' do |mysql|
-    mysql.vm.box = 'peru/ubuntu-20.04-server-amd64'
-    mysql.vm.box_url = 'https://app.vagrantup.com/peru/boxes/ubuntu-20.04-server-amd64'
-    mysql.vm.box_version = '20210401.01'
+    mysql.vm.box = 'bento/centos-7.9'
+    mysql.vm.box_url = 'https://vagrantcloud.com/bento/boxes/centos-7.9'
+    mysql.vm.box_version = '202103.18.0'
     mysql.vm.hostname = 'mysql'
     mysql.vm.network :private_network, ip: '192.168.10.100'
-    mysql.vm.provision :shell, inline: NODE_SCRIPT.dup
+    mysql.vm.provision :shell, inline: NODE_SCRIPT_CENTOS.dup
     mysql.vm.provider :virtualbox do |vb|
       vb.gui = false
     end
