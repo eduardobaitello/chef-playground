@@ -32,6 +32,10 @@ After boostrapping, go to http://localhost:8080.
 # Upload roles
 knife role from file roles/*.rb
 
+# Create data bag
+knife data bag create mysql
+knife data bag from file mysql data_bags/mysql/mysql.json
+
 knife bootstrap localhost -p 2222 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N php_apache \
 --run-list "role[php-apache]"

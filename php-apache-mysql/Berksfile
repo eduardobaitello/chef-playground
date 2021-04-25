@@ -3,6 +3,6 @@
 
 source 'https://supermarket.chef.io'
 
-%w(wrapper-apache2 wrapper-php).each do | cookbook_name |
+%w(wrapper-apache2 wrapper-php wrapper-mysql).each do | cookbook_name |
   cookbook cookbook_name, path: 'cookbooks/' + cookbook_name
 end
