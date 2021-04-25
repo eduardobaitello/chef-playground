@@ -8,7 +8,7 @@ end
 NODE_SCRIPT = <<EOF.freeze
   echo "Preparing node..."
   # Install chef client
-  wget https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 16.12
+  wget -O - https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 16.12
 EOF
 
 def set_hostname(server)
