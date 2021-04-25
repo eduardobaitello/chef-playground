@@ -1,5 +1,6 @@
 {
   "id": "php",
+  "database": "php_db",
   "username": "php_user",
   "password": "PHP_4pp_P4ssw0rd"
 }

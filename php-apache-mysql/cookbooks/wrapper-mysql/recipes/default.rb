@@ -24,18 +24,15 @@ end
 
 # Create database for PHP application
 
-# PHP database name
-php_db = 'php_db'
+# PHP databag
+php_databag = data_bag_item('mysql', 'php')
 
-mysql_database php_db do
+mysql_database php_databag['database'] do
   host '127.0.0.1'
   user 'root'
   password mysql_root_pass['password']
   action :create
 end
-
-# PHP databag
-php_databag = data_bag_item('mysql', 'php')
 
 # Create user for PHP application
 mysql_user php_databag['username'] do
@@ -51,7 +48,7 @@ end
 # Grant permissions for php_user
 mysql_user php_databag['username'] do
   password php_databag['password']
-  database_name php_db
+  database_name php_databag['database']
   host '%'
   privileges [:select,:update,:insert]
   action :grant
