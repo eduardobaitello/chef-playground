@@ -36,11 +36,11 @@ knife role from file roles/*.rb
 knife data bag create mysql
 knife data bag from file mysql data_bags/mysql/ -a
 
-knife bootstrap localhost -p 2222 -U vagrant --sudo \
--i {IDENTITY_FILE} -N php_apache \
---run-list "role[php-apache]"
-
 knife bootstrap localhost -p 2200 -U vagrant --sudo \
 -i {IDENTITY_FILE} -N mysql \
 --run-list "role[mysql]"
+
+knife bootstrap localhost -p 2222 -U vagrant --sudo \
+-i {IDENTITY_FILE} -N php_apache \
+--run-list "role[php-apache]"
 ```

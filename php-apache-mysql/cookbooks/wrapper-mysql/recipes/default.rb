@@ -50,7 +50,7 @@ mysql_user php_databag['username'] do
   password php_databag['password']
   database_name php_databag['database']
   host '%'
-  privileges [:select,:update,:insert]
+  privileges [:select,:update,:insert,:create]
   action :grant
   # Control connection credentials
   ctrl_host '127.0.0.1'
