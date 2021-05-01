@@ -12,6 +12,13 @@ service 'apache2' do
   action :nothing
 end
 
+# Install Apache
 apache2_install 'default'
 
+# Install php module
 apache2_mod_php 'default'
+
+# Disable "php7.4" module to prevent conflicts with "php" module
+apache2_module "php7.4" do
+  action :disable
+end
