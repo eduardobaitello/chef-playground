@@ -8,4 +8,8 @@ apt_update 'update' do
   action :update
 end
 
+# Installs PHP
 include_recipe 'php::default'
+
+# Install php-mysql module for PHP
+package 'php-mysql'
