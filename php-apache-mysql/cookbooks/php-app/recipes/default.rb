@@ -24,3 +24,31 @@ mysql_database 'employees' do
       );"
   action :query
 end
+
+# Make sure default index.html is absent
+file '/var/www/html/index.html' do
+  action :delete
+end
+
+# Copy PHP Application files
+template '/var/www/html/config.php' do
+  source 'config.php.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  action :create
+  variables(
+    db_server: '192.168.10.100',
+    db_username: php_databag['username'],
+    db_password: php_databag['password'],
+    db_name: php_databag['database']
+  )
+end
+
+remote_directory '/var/www/html' do
+  source 'php_app'
+  files_owner 'root'
+  files_group 'root'
+  files_mode '0644'
+  action :create
+end
