@@ -13,3 +13,8 @@ include_recipe 'php::default'
 
 # Install php-mysql module for PHP
 package 'php-mysql'
+
+# Install php-fpm package and configures a FPM pool
+php_fpm_pool 'default' do
+  action :install
+end

@@ -15,10 +15,13 @@ end
 # Install Apache
 apache2_install 'default'
 
-# Install php module
-apache2_mod_php 'default'
+# Enable modules need by PHP FPM
+apache2_module 'proxy'
+apache2_module 'proxy_fcgi'
+apache2_module 'setenvif'
 
-# Disable "php7.4" module to prevent conflicts with "php" module
-apache2_module "php7.4" do
-  action :disable
+# Enable PHP FPM config
+execute 'enable_fpm_conf' do
+  command 'a2enconf php7.4-fpm'
+  notifies :restart, 'service[apache2]', :immediately
 end
