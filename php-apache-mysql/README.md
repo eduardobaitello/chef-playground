@@ -1,7 +1,5 @@
 # php-apache-mysql
 
-**WIP**
-
 Installs 1 php-apache and 1 mysql.
 
 # Vagrant Environment
