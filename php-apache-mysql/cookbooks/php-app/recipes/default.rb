@@ -10,6 +10,10 @@ package 'mysql-client-core-8.0'
 # PHP databag
 php_databag = data_bag_item('mysql', 'php')
 
+# Search MySQL node
+# mysql_nodes = search('node', 'name:mysql')
+# mysql_ipaddress = mysql_nodes.first[:ipaddress]
+
 # Create PHP application table
 mysql_database 'employees' do
   host '192.168.10.100'
@@ -36,6 +40,7 @@ template '/var/www/html/config.php' do
   owner 'root'
   group 'root'
   mode '0644'
+  sensitive true
   action :create
   variables(
     db_server: '192.168.10.100',
